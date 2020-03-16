@@ -10,7 +10,47 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_12_051858) do
+ActiveRecord::Schema.define(version: 2020_03_15_225451) do
+
+  create_table "account_lines", force: :cascade do |t|
+    t.float "total"
+    t.integer "sale_id"
+    t.integer "current_account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["current_account_id"], name: "index_account_lines_on_current_account_id"
+    t.index ["sale_id"], name: "index_account_lines_on_sale_id"
+  end
+
+  create_table "account_payments", force: :cascade do |t|
+    t.float "total"
+    t.integer "current_account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["current_account_id"], name: "index_account_payments_on_current_account_id"
+  end
+
+  create_table "account_statuses", force: :cascade do |t|
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.float "total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "current_accounts", force: :cascade do |t|
+    t.float "total"
+    t.integer "cliente_id"
+    t.integer "account_status_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_status_id"], name: "index_current_accounts_on_account_status_id"
+    t.index ["cliente_id"], name: "index_current_accounts_on_cliente_id"
+  end
 
   create_table "products", force: :cascade do |t|
     t.string "name"
@@ -39,6 +79,8 @@ ActiveRecord::Schema.define(version: 2020_03_12_051858) do
     t.integer "sale_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "sale_lineable_id"
+    t.string "sale_lineable_type"
     t.index ["product_id"], name: "index_sale_lines_on_product_id"
     t.index ["sale_id"], name: "index_sale_lines_on_sale_id"
   end

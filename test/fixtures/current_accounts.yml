@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  total: 1.5
+  cliente: one
+  account_status: one
+
+two:
+  total: 1.5
+  cliente: two
+  account_status: two

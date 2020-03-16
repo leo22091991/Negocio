@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @account_payment.total %>
+</p>
+
+<p>
+  <strong>Current account:</strong>
+  <%= @account_payment.current_account %>
+</p>
+
+<%= link_to 'Edit', edit_account_payment_path(@account_payment) %> |
+<%= link_to 'Back', account_payments_path %>

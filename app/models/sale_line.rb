@@ -1,4 +1,4 @@
 class SaleLine < ApplicationRecord
   belongs_to :product
-  belongs_to :sale
+  belongs_to :sale_lineable, :polymorphic => true
 end

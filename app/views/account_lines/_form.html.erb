@@ -1,0 +1,32 @@
+<%= form_with(model: account_line, local: true) do |form| %>
+  <% if account_line.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(account_line.errors.count, "error") %> prohibited this account_line from being saved:</h2>
+
+      <ul>
+      <% account_line.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :total %>
+    <%= form.text_field :total %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sale_id %>
+    <%= form.text_field :sale_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :current_account_id %>
+    <%= form.text_field :current_account_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

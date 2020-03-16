@@ -64,11 +64,11 @@ class SalesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_sale
-      @sale = Sale.find(params[:id])
+      @sale = Sale.find_by_id(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def sale_params
-      params.fetch(:sale, {})
+      params.require(:sale).permit(sale_lines_attributes: [:product_id, :quantity])
     end
 end

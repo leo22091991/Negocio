@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Account Statuses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @account_statuses.each do |account_status| %>
+      <tr>
+        <td><%= account_status.description %></td>
+        <td><%= link_to 'Show', account_status %></td>
+        <td><%= link_to 'Edit', edit_account_status_path(account_status) %></td>
+        <td><%= link_to 'Destroy', account_status, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Account Status', new_account_status_path %>
