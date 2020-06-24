@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Salary Assets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Total</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @salary_assets.each do |salary_asset| %>
+      <tr>
+        <td><%= salary_asset.total %></td>
+        <td><%= link_to 'Show', salary_asset %></td>
+        <td><%= link_to 'Edit', edit_salary_asset_path(salary_asset) %></td>
+        <td><%= link_to 'Destroy', salary_asset, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Salary Asset', new_salary_asset_path %>

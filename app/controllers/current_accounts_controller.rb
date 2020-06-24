@@ -64,11 +64,11 @@ class CurrentAccountsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_current_account
-      @current_account = CurrentAccount.find(params[:id])
+      @current_account = CurrentAccount.find_by_id(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def current_account_params
-      params.require(:current_account).permit(:total, :cliente_id, :account_status_id)
+      params.require(:current_account).permit(:total, :account_status_id)
     end
 end

@@ -1,0 +1,2 @@
+module SalaryAssetsHelper
+end

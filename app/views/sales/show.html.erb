@@ -1,4 +1,17 @@
 <p id="notice"><%= notice %></p>
 
+<p>
+  <strong>total:</strong>
+  <%= @sale.total_sale %>
+</p>
+
+<p>
+	<strong>detalle</strong>
+	<% @sale.sale_lines.each do |sale_line| %>
+		<%= sale_line.quantity %> - <%= sale_line.product.name %> $<%= sale_line.product.sale_price%> - $<%= sale_line.subtotal %>
+	<% end %>
+</p>
+
+
 <%= link_to 'Edit', edit_sale_path(@sale) %> |
 <%= link_to 'Back', sales_path %>

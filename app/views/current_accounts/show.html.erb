@@ -1,19 +1,46 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+	<strong>Apellido:</strong>
+	<%= @current_account.last_name %>
+</p>
+<p>
+	<strong>Nombre:</strong>
+	<%= @current_account.first_name %>
+</p>
+<p>
+	<strong>dni:</strong>
+	<%= @current_account.dni %>
+</p>
+
+<p>
   <strong>Total:</strong>
   <%= @current_account.total %>
 </p>
 
-<p>
-  <strong>Cliente:</strong>
-  <%= @current_account.cliente %>
-</p>
+<div>
+	<% @current_account.sales.each do |sale| %>
+		<div>
+			Fecha: <%= sale.created_at %>
+			Subtotal: <%= sale.total_sale %>
+		</div>
+	<% end %>
+</div>
 
 <p>
   <strong>Account status:</strong>
-  <%= @current_account.account_status %>
+  <%= @current_account.account_status.description %>
 </p>
+
+<div>
+	Agregar Pago
+</div>
+<%= form_with(url: "/account_payments", method: "post") do %>
+  <%= label_tag(:total, "monto:") %>
+  <%= text_field_tag(:total) %>
+  <%= hidden_field_tag(:current_account_id, @current_account.id) %>
+  <%= submit_tag("Confirmar Pago en efectivo") %>
+<% end %>
 
 <%= link_to 'Edit', edit_current_account_path(@current_account) %> |
 <%= link_to 'Back', current_accounts_path %>

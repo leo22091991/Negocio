@@ -24,12 +24,15 @@ class AccountPaymentsController < ApplicationController
   # POST /account_payments
   # POST /account_payments.json
   def create
-    @account_payment = AccountPayment.new(account_payment_params)
+    @account_payment = AccountPayment.new(total: params[:total], current_account_id: params[:current_account_id])
 
     respond_to do |format|
       if @account_payment.save
         format.html { redirect_to @account_payment, notice: 'Account payment was successfully created.' }
         format.json { render :show, status: :created, location: @account_payment }
+        
+        @ca = CurrentAccount.find_by_id(params[:current_account_id])
+        @ca.update(total: @ca.set_totals!)
       else
         format.html { render :new }
         format.json { render json: @account_payment.errors, status: :unprocessable_entity }
@@ -64,7 +67,7 @@ class AccountPaymentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_account_payment
-      @account_payment = AccountPayment.find(params[:id])
+      @account_payment = AccountPayment.find_by_id(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

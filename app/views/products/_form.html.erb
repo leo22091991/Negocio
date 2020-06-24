@@ -37,13 +37,11 @@
   </div>
 
   <div class="field">
-    <%= form.label :type_id %>
-    <%= form.text_field :type_id %>
+    <%= collection_select(:product, :type_id, Type.all.order(:id), :id, :name ) %> 
   </div>
 
   <div class="field">
-    <%= form.label :provider_id %>
-    <%= form.text_field :provider_id %>
+    <%= collection_select(:product, :provider_id, Provider.all.order(:business_name), :id, :business_name) %> 
   </div>
 
   <div class="actions">

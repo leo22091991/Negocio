@@ -51,6 +51,14 @@ class SaleLinesController < ApplicationController
     end
   end
 
+  def update_quantity
+
+    line_item2 = current_cart.sale_lines.find_by_id(params[:sale_line_id])
+    line_item2.update(quantity: line_item2.quantity + params[:quantity].to_i)
+
+    redirect_to '/welcome/cart'
+  end
+
   # DELETE /sale_lines/1
   # DELETE /sale_lines/1.json
   def destroy
@@ -70,5 +78,9 @@ class SaleLinesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def sale_line_params
       params.require(:sale_line).permit(:quantity, :subtotal, :product_id, :sale_id)
+    end
+
+    def current_cart
+      @cart = Cart.last
     end
 end

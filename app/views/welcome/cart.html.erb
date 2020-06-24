@@ -1,0 +1,72 @@
+<main class="welcome-main">
+	<div class="cart">
+		<% @products.each do |product| %>
+			<div class="product">
+				<div class="product-name">
+					<%= product.name %>
+				</div>
+				<div class="product-sale-price">
+					<%= product.sale_price %>
+				</div>
+				<div class="button-add-to-cart">
+					<%= form_with(url: "/carts", method: "patch") do %>
+						<%= hidden_field_tag(:product_id, product.id) %>
+						<%= submit_tag("Agregar al Carrito") %>
+					<% end %>
+				</div>
+			</div>
+		<% end %>	
+	</div>
+	<div class="cart-add">
+		<div class="cart-add-total">
+			TOTAL: <%= @cart.set_totals%>
+		</div>
+		<% @cart.sale_lines.order(:created_at).each do |sale_line| %>
+			<div class="cart-add-product">
+				<div class="cart-add-product-delete">
+					<%= form_with(url: "/carts/delete_sale_line", method: "delete") do %>
+						<%= hidden_field_tag(:sale_line_id, sale_line.id) %>
+						<%= submit_tag("X") %>
+					<% end %>
+				</div>
+				<div class="cart-add-product-name">
+					<%= sale_line.product.name %>
+				</div>
+				<div class="cart-add-product-price">
+					<%= sale_line.product.sale_price %>
+				</div>
+				<div class="cart-subtract">
+					<%= form_with(url: "/sale_lines/update_quantity", method: "patch") do %>
+						<%= hidden_field_tag(:sale_line_id, sale_line.id) %>
+						<%= hidden_field_tag(:quantity, -1) %>
+						<%= submit_tag("-") %>
+					<% end %>
+			</div>
+				<div class="cart-add-product-quantity">
+					<%= sale_line.quantity %>
+				</div>
+				<div class="button-cart-add">
+					<%= form_with(url: "/sale_lines/update_quantity", method: "patch") do %>
+						<%= hidden_field_tag(:sale_line_id, sale_line.id) %>
+						<%= hidden_field_tag(:quantity, 1) %>
+						<%=  submit_tag("+") %>
+					<% end %>
+				</div>
+			</div>
+		<% end %>
+
+		<% if @cart.set_totals != 0.0 %>
+			<form method="post" action="/sales">
+			  	<%= select_tag 'current_account_id', options_from_collection_for_select(CurrentAccount.order(:id), :id, :id) %>
+			  	<input type="submit" value="Agregar Cuenta Corriente">
+			</form>
+
+			<div class="button-comprar">
+				<%= form_with(url: '/sales', method: "post") do %>
+					<%= submit_tag("Comprar efectivo") %>
+				<% end %>
+			</div>
+		<% end %>
+
+	</div>
+</main>

@@ -12,16 +12,19 @@
   <% end %>
 
   <div class="field">
+    <%= collection_select(:account_payment, :current_account_id, CurrentAccount.all.order(:id), :id, :dni ) %> 
+  </div>
+
+  <%= select_tag 'current_account_id', options_from_collection_for_select(CurrentAccount.order(:id), :id, :id) %>
+
+  <div class="field">
     <%= form.label :total %>
     <%= form.text_field :total %>
   </div>
 
-  <div class="field">
-    <%= form.label :current_account_id %>
-    <%= form.text_field :current_account_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="button-comprar">
+    <%= form_with(url: '/account_payments', method: "post") do %>
+      <%= submit_tag("Crear") %>
+    <% end %>
   </div>
 <% end %>

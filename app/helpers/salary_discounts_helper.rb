@@ -1,0 +1,2 @@
+module SalaryDiscountsHelper
+end

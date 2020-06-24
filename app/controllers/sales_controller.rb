@@ -24,12 +24,46 @@ class SalesController < ApplicationController
   # POST /sales
   # POST /sales.json
   def create
-    @sale = Sale.new(sale_params)
+    if params[:current_account_id] != nil
+      @sale = Sale.new(total_sale: set_total_sale, current_account_id: params[:current_account_id])
+      current_cart.sale_lines.each do |sale_line|
+        product_id = sale_line.product_id
+        quantity = sale_line.quantity
+        subtotal = sale_line.subtotal
+
+        @sale.sale_lines.new(
+          product_id: product_id,
+          quantity: quantity,
+          subtotal: subtotal
+          )
+      end
+      #@current_account = CurrentAccount.find_by_id(params[:current_account_id])
+      #@current_account.update(total: @current_account.set_totals!)
+    else
+      @sale = Sale.new(total_sale: set_total_sale)
+      current_cart.sale_lines.each do |sale_line|
+        product_id = sale_line.product_id
+        quantity = sale_line.quantity
+        subtotal = sale_line.subtotal
+
+        @sale.sale_lines.new(
+          product_id: product_id,
+          quantity: quantity,
+          subtotal: subtotal
+          )
+      end
+    end
 
     respond_to do |format|
       if @sale.save
         format.html { redirect_to @sale, notice: 'Sale was successfully created.' }
         format.json { render :show, status: :created, location: @sale }
+
+        current_cart.sale_lines.delete_all
+        if @sale.current_account_id != nil
+          @current_account = CurrentAccount.find_by_id(params[:current_account_id])
+          @current_account.update(total: @current_account.set_totals!)
+        end
       else
         format.html { render :new }
         format.json { render json: @sale.errors, status: :unprocessable_entity }
@@ -48,6 +82,7 @@ class SalesController < ApplicationController
         format.html { render :edit }
         format.json { render json: @sale.errors, status: :unprocessable_entity }
       end
+
     end
   end
 
@@ -69,6 +104,19 @@ class SalesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def sale_params
-      params.require(:sale).permit(sale_lines_attributes: [:product_id, :quantity])
+      params.require(:sale).permit(:current_account_id, sale_lines_attributes: [:quantity, :product_id])
+    end
+
+    def current_cart
+      @cart = Cart.first
+    end
+
+    def set_total_sale
+      lines = current_cart.sale_lines
+      total = 0.0
+      lines.each do |line|
+        total = total + line.subtotal
+      end
+      return total
     end
 end

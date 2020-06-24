@@ -10,11 +10,11 @@
   </thead>
 
   <tbody>
-    <% @sales.each do |sale| %>
+    <% @sales.order(:created_at).each do |sale| %>
       <tr>
+        <td><%= sale.total_sale %></td>
+        <td><%= sale.created_at %></td>
         <td><%= link_to 'Show', sale %></td>
-        <td><%= link_to 'Edit', edit_sale_path(sale) %></td>
-        <td><%= link_to 'Destroy', sale, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

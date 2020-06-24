@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Gross salary:</strong>
+  <%= @salary.gross_salary %>
+</p>
+
+<p>
+  <strong>Net salary:</strong>
+  <%= @salary.net_salary %>
+</p>
+
+<%= link_to 'Edit', edit_salary_path(@salary) %> |
+<%= link_to 'Back', salaries_path %>

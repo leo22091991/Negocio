@@ -1,6 +1,18 @@
 Rails.application.routes.draw do
+  resources :discounts
+  resources :salary_discounts
+  resources :assets
+  resources :asset_types
+  resources :salary_assets
+  resources :salaries
+  get '/welcome/cart'=>'welcome#cart'
+  root 'welcome#index'
+  patch '/carts' => 'carts#update'
+  patch '/sale_lines/update_quantity' => 'sale_lines#update_quantity'
+  delete '/carts/delete_sale_line' => 'carts#delete_sale_line'
+
+
   resources :carts
-  resources :account_lines
   resources :account_payments
   resources :current_accounts
   resources :account_statuses
@@ -9,7 +21,7 @@ Rails.application.routes.draw do
   resources :products
   resources :providers
   resources :types
-  get 'welcome/index'
-  root 'welcome#index'
+  resources :welcome
+  #root 'welcome#cart_index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
