@@ -69,6 +69,6 @@ class SalaryAssetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def salary_asset_params
-      params.require(:salary_asset).permit(:total)
+      params.require(:salary_asset).permit(:total, :asset_id)
     end
 end

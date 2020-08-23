@@ -61,14 +61,19 @@ class SalariesController < ApplicationController
     end
   end
 
+  def charge
+    @assets = Asset.all
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_salary
-      @salary = Salary.find(params[:id])
+      @salary = Salary.find_by_id(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def salary_params
-      params.require(:salary).permit(:gross_salary, :net_salary, salary_assets_attributes:[:asset_id], salary_discounts_attributes:[:discount_id])
+      params.require(:salary).permit(:gross_salary, :net_salary, :extra_hour, :user_id, salary_assets_attributes:[:asset_ids => [
+      ]], salary_discounts_attributes:[:discount_id], :asset_ids=>[], :discount_ids =>[])
     end
 end

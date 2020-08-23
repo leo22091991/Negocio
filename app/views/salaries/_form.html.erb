@@ -1,27 +1,45 @@
-<%= form_with(model: salary, local: true) do |form| %>
-  <% if salary.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(salary.errors.count, "error") %> prohibited this salary from being saved:</h2>
-
-      <ul>
-      <% salary.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= form_for :salary, :url => { :action => :create } do |form| %>
+   <div class="field">
+      <%= collection_select(:salary, :user_id, User.all.order(:id), :id, :dni ) %> 
     </div>
-  <% end %>
 
   <div class="field">
-    <%= form.label :gross_salary %>
-    <%= form.text_field :gross_salary %>
+      <%= form.label :extra_hour %>
+      <%= form.text_field :extra_hour %>
+    </div>
+    
+    <div class="field">
+      <%= form.label "Activos Remunerativos" %></>
+      <%= form.collection_check_boxes :asset_ids, Asset.all.where(asset_type: 1), :id, :description_and_total, {include_hidden: false} do |b| %>
+        <div class="collection-check-box">
+            <%= b.check_box %>
+            <%= b.label %>
+        </div>
+      <% end %>
   </div>
 
   <div class="field">
-    <%= form.label :net_salary %>
-    <%= form.text_field :net_salary %>
+      <%= form.label "Activos No Remunerativos" %></>
+      <%= form.collection_check_boxes :asset_ids, Asset.all.where(asset_type: 2), :id, :description_and_total, {include_hidden: false} do |b| %>
+        <div class="collection-check-box">
+            <%= b.check_box %>
+            <%= b.label %>
+        </div>
+      <% end %>
   </div>
 
-  <div class="actions">
+  <div class="field">
+      <%= form.label "Descuentos" %></>
+      <%= form.collection_check_boxes :discount_ids, Discount.all, :id, :description, {include_hidden: false} do |b| %>
+        <div class="collection-check-box">
+            <%= b.check_box %>
+            <%= b.label %>
+        </div>
+      <% end %>
+  </div>
+
+  <div class="button">
     <%= form.submit %>
   </div>
+
 <% end %>

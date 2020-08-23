@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
+  resources :positions
+  resources :users
   resources :discounts
   resources :salary_discounts
   resources :assets
   resources :asset_types
   resources :salary_assets
+  get '/salaries/charge'=>'salaries#charge'
+  post '/salaries/charge'=>'salaries#charge'
+  get '/sales/sales-menu'=>'sales#sales-menu'
   resources :salaries
   get '/welcome/cart'=>'welcome#cart'
   root 'welcome#index'

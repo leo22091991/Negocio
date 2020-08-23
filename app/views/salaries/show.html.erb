@@ -1,14 +1,94 @@
-<p id="notice"><%= notice %></p>
+<div class="salary-main">
+	<p> <font size="3", color="orange">Apellido:</font> <%= @salary.user.last_name %></p>
+	<p>Nombres: <%= @salary.user.name %></p>
+	<p>DNI: <%= @salary.user.dni %></p>
+	<p>Puesto: <%= @salary.user.position.description %></p>
+	<p>Fecha de ingreso: <%= @salary.user.admission_date %> (Antiguedad: <%= @salary.user.set_antiguedad%> años)</p>
 
-<p>
-  <strong>Gross salary:</strong>
-  <%= @salary.gross_salary %>
-</p>
+	<table border="1">
+	  	<caption><font size="3">Detalle Liquidacion</font></caption>
+	  	<thead>
+	    <tr>
+	      <th>Concepto</th>
+	      <th>Remunerativo</th>
+	      <th>No Remunerativo</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	  	<tr>
+	  		<td>Sueldo Basico</td>
+	  		<td>$<%= @salary.user.position.total %></td>
+	  		<td> </td>
+	  	</tr>
+	  	<tr>
+	  		<td>Antiguedad</td>
+	  		<td>$<%= @salary.set_antiguedad%></td>
+	  		<td></td>
+	  	</tr>
+	  	<tr>
+	  		<td>Horas Extras</td>
+	  		<td>$<%= @salary.set_extra_hours%></td>
+	  		<td></td>
+	  	</tr>
+	  	<% @salary.assets.each do |asset| %>
+		    <tr>
+		      <td><%= asset.description %></td>
 
-<p>
-  <strong>Net salary:</strong>
-  <%= @salary.net_salary %>
-</p>
+		      <% if asset.asset_type_id == 1 %>
+		      	<td>$<%= asset.total %></td>
+		      <% else %>
+		      	<td> </td>
+		      <% end %>
 
-<%= link_to 'Edit', edit_salary_path(@salary) %> |
-<%= link_to 'Back', salaries_path %>
+		      <% if asset.asset_type_id == 2 %>
+		      	<td>$<%= asset.total %></td>
+		      <% else %>
+		      	<td> </td>
+		      <% end %>
+		    </tr>
+	    <% end %>
+	    <tr>
+	      <th>Totales</th>
+	      <td>$<%= @salary.set_remunerable %></td>
+	      <td>$<%= (@salary.set_gross_salary) - (@salary.set_remunerable) %></td>
+	    </tr>
+	    <tr>
+	      <th>Descuento</th>
+	      <th>Porcentage</th>
+	      <th></th>
+	    </tr>
+	    <% @salary.discounts.each do |discount| %>
+	    	<tr>
+	    		<td><%= discount.description %></td>
+	    		<td><%= discount.percentage %>%</td>
+	    		<td></td>
+	    	</tr>
+	    <% end %>
+
+	    <tr>
+	    	<th>Porcentage Total</th>
+	    	<td><%= @salary.set_total_discount %>%</td>
+	    	<td></td>
+
+	    </tr>
+
+	  </tbody>
+	  <tfoot>
+	  	<tr>
+	  		<th>Sueldo Bruto</th>
+	  		<th colspan="2">$<%= @salary.set_gross_salary %></th>
+	  	</tr>
+	  	<tr>
+	  		<th>Descuento Total</th>
+	  		<th colspan="2">-$<%= (@salary.set_remunerable * @salary.set_total_discount) / 100 %></th>
+	  	</tr>
+	    <tr>
+	      <th>Total A Pagar</th>
+	      <th colspan="2">$<%= @salary.set_net_salary%></th>
+	    </tr>
+	  </tfoot>
+</table>
+
+	<%= link_to 'Edit', edit_salary_path(@salary) %> |
+	<%= link_to 'Back', salaries_path %>
+</div>

@@ -1,17 +1,33 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>total:</strong>
-  <%= @sale.total_sale %>
-</p>
-
-<p>
-	<strong>detalle</strong>
-	<% @sale.sale_lines.each do |sale_line| %>
-		<%= sale_line.quantity %> - <%= sale_line.product.name %> $<%= sale_line.product.sale_price%> - $<%= sale_line.subtotal %>
+<table border="1">
+  <caption>Detalle Venta</caption>
+  <thead>
+    <tr>
+      <th>Cantidad</th>
+      <th>Descripcion</th>
+      <th>Precio Unitario</th>
+      <th>Subtotal</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% @sale.sale_lines.each do |sale_line| %>
+	    <tr>
+	      <td><%= sale_line.quantity %></td>
+	      <td><%= sale_line.product.name %></td>
+	      <td>$<%= sale_line.product.sale_price%></td>
+	      <td>$<%= sale_line.subtotal %></td>
+	    </tr>
 	<% end %>
-</p>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th></th>
+      <th></th>
+      <th>TOTAL:</th>
+      <th><%= @sale.total_sale %></th>
+    </tr>
+  </tfoot>
+</table>
 
-
-<%= link_to 'Edit', edit_sale_path(@sale) %> |
-<%= link_to 'Back', sales_path %>
+<%= link_to 'volver', sales_path %>
