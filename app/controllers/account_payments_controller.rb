@@ -1,5 +1,6 @@
 class AccountPaymentsController < ApplicationController
   before_action :set_account_payment, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /account_payments
   # GET /account_payments.json
@@ -28,7 +29,7 @@ class AccountPaymentsController < ApplicationController
 
     respond_to do |format|
       if @account_payment.save
-        format.html { redirect_to @account_payment, notice: 'Account payment was successfully created.' }
+        format.html { redirect_to request.referrer, notice: 'Account payment was successfully created.' }
         format.json { render :show, status: :created, location: @account_payment }
         
         @ca = CurrentAccount.find_by_id(params[:current_account_id])

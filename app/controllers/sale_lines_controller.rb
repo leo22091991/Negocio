@@ -1,5 +1,6 @@
 class SaleLinesController < ApplicationController
   before_action :set_sale_line, only: [:show, :edit, :update, :destroy]
+  #before_action :authenticate_user!
 
   # GET /sale_lines
   # GET /sale_lines.json

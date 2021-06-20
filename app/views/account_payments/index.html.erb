@@ -2,11 +2,12 @@
 
 <h1>Account Payments</h1>
 
-<table>
+<table border="1">
   <thead>
     <tr>
-      <th>Total</th>
-      <th>Current account</th>
+      <th>Monto</th>
+      <th>Cuenta Corriente</th>
+      <th>Fecha</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,8 +15,9 @@
   <tbody>
     <% @account_payments.each do |account_payment| %>
       <tr>
-        <td><%= account_payment.total %></td>
-        <td><%= account_payment.current_account %></td>
+        <td> $<%= account_payment.total %></td>
+        <td><%= account_payment.current_account.id %></td>
+        <td><%= account_payment.created_at.day %> / <%= account_payment.created_at.month %> / <%= account_payment.created_at.year %></td>
         <td><%= link_to 'Show', account_payment %></td>
         <td><%= link_to 'Edit', edit_account_payment_path(account_payment) %></td>
         <td><%= link_to 'Destroy', account_payment, method: :delete, data: { confirm: 'Are you sure?' } %></td>

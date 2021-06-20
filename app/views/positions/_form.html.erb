@@ -21,7 +21,13 @@
     <%= form.text_field :total %>
   </div>
 
+  <div class="field">
+    <%= form.label :Permiso_de_usuario %>
+    <%= collection_select(:position, :user_permission_id, UserPermission.all.order(:id), :id, :description) %> 
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
+

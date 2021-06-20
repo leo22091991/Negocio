@@ -1,5 +1,11 @@
 <main class="welcome-main">
 	<div class="cart">
+		<%= form_tag("/welcome/cart", method: "get") do %>
+  			<%= label_tag(:q, "Search for:") %>
+  			<%= text_field_tag(:q) %>
+  			<%= submit_tag("Search") %>
+		<% end %>
+
 		<% @products.each do |product| %>
 			<div class="product">
 				<div class="product-name">
@@ -57,7 +63,7 @@
 
 		<% if @cart.set_totals != 0.0 %>
 			<form method="post" action="/sales">
-			  	<%= select_tag 'current_account_id', options_from_collection_for_select(CurrentAccount.order(:id), :id, :id) %>
+			  	<%= select_tag 'current_account_id', options_from_collection_for_select(CurrentAccount.order(:id), :id, :dni_and_names) %>
 			  	<input type="submit" value="Agregar Cuenta Corriente">
 			</form>
 

@@ -10,6 +10,8 @@ class Salary < ApplicationRecord
 
 	accepts_nested_attributes_for :salary_discounts
 
+	validate :salary_period
+	validate :one_salary_for_month_for_user
 	after_validation :set_remunerable
 	after_validation :set_gross_salary
 	after_validation :set_total_discount
@@ -76,6 +78,31 @@ class Salary < ApplicationRecord
 		pago_antiguedad = cantidad_anual * antiguedad
 
 		return pago_antiguedad
+	end
+
+	def one_salary_for_month_for_user
+		y = 0
+		m = 0
+		@user = self.user_id
+		@salaries = Salary.all
+		@month = Time.now.month
+		@year = Time.now.year
+		@salaries.each do |salary|
+			if salary.created_at.year.to_i == @year.to_i
+				if salary.created_at.month.to_i == @month.to_i
+					if salary.user_id == @user
+						errors.add(:salaries, 'ERROR')
+					end
+				end	
+			end
+		end
+	end
+
+	def salary_period
+		date = Time.now.day
+		if date > 10
+			errors.add(:salaries, 'ERROR')
+		end
 	end
 
 end

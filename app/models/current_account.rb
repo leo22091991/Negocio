@@ -3,9 +3,12 @@ class CurrentAccount < ApplicationRecord
   has_many :account_payments, dependent: :destroy
   has_many :sales, dependent: :destroy
 
-
   after_update :set_totals!
-  before_validation :set_status
+  before_validation :set_status_and_total
+
+  def dni_and_names
+      "#{dni} #{last_name} #{first_name}"
+  end
 
   def set_totals!
   	tot = 0.0
@@ -23,8 +26,9 @@ class CurrentAccount < ApplicationRecord
   end
 
   private
-  def set_status
+  def set_status_and_total
     self.account_status_id = 1
+    self.total = 0
   end
 
 end

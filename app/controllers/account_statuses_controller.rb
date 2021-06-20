@@ -1,5 +1,6 @@
 class AccountStatusesController < ApplicationController
   before_action :set_account_status, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /account_statuses
   # GET /account_statuses.json

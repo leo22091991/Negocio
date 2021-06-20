@@ -1,5 +1,6 @@
 class SalesController < ApplicationController
   before_action :set_sale, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /sales
   # GET /sales.json
@@ -96,6 +97,8 @@ class SalesController < ApplicationController
     end
   end
 
+  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_sale
@@ -108,11 +111,16 @@ class SalesController < ApplicationController
     end
 
     def current_cart
-      @cart = Cart.first
+      #user = current_user.id
+      #@cart = Cart.find_by(user_id: user)
+      @cart = current_user.carts.last
     end
 
     def set_total_sale
-      lines = current_cart.sale_lines
+      #user = current_user.id
+      c_cart = current_user.carts.last
+      #current_cart = current_user.carts.last
+      lines = c_cart.sale_lines
       total = 0.0
       lines.each do |line|
         total = total + line.subtotal

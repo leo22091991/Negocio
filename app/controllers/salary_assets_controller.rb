@@ -1,5 +1,6 @@
 class SalaryAssetsController < ApplicationController
   before_action :set_salary_asset, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /salary_assets
   # GET /salary_assets.json

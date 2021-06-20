@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_23_033138) do
+ActiveRecord::Schema.define(version: 2020_09_07_191458) do
 
   create_table "account_payments", force: :cascade do |t|
     t.float "total"
@@ -46,7 +46,9 @@ ActiveRecord::Schema.define(version: 2020_07_23_033138) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "current_account_id"
+    t.integer "user_id"
     t.index ["current_account_id"], name: "index_carts_on_current_account_id"
+    t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
   create_table "current_accounts", force: :cascade do |t|
@@ -72,6 +74,8 @@ ActiveRecord::Schema.define(version: 2020_07_23_033138) do
     t.float "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_permission_id"
+    t.index ["user_permission_id"], name: "index_positions_on_user_permission_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -154,16 +158,29 @@ ActiveRecord::Schema.define(version: 2020_07_23_033138) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_permissions", force: :cascade do |t|
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
-    t.integer "dni"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "dni"
     t.string "last_name"
     t.string "name"
     t.string "phone"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "position_id"
     t.date "admission_date"
+    t.integer "position_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["position_id"], name: "index_users_on_position_id"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
 end

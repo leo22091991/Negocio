@@ -12,35 +12,36 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label :Nombre %>
     <%= form.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :purchase_price %>
+    <%= form.label :Precio_de_compra %>
     <%= form.text_field :purchase_price %>
   </div>
 
   <div class="field">
-    <%= form.label :sale_price %>
+    <%= form.label :Precio_de_veta %>
     <%= form.text_field :sale_price %>
   </div>
 
   <div class="field">
-    <%= form.label :total_stock %>
+    <%= form.label :stock_total %>
     <%= form.number_field :total_stock %>
   </div>
 
   <div class="field">
-    <%= form.label :min_stock %>
+    <%= form.label :Stock_minimo %>
     <%= form.number_field :min_stock %>
   </div>
 
   <div class="field">
-    <%= collection_select(:product, :type_id, Type.all.order(:id), :id, :name ) %> 
+    <%= form.label :Tipo_producto %> <%= collection_select(:product, :type_id, Type.all.order(:id), :id, :name ) %> 
   </div>
 
   <div class="field">
+    <%= form.label :Proveedor %>
     <%= collection_select(:product, :provider_id, Provider.all.order(:business_name), :id, :business_name) %> 
   </div>
 

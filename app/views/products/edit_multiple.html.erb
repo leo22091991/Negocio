@@ -1,0 +1,26 @@
+<%= form_for :product, url: "/products/update_multiple", :html => {:method => :put} do |form|%>
+	
+
+
+    <ul>
+    	<% @products.each do |product|%>
+      		<li>
+        		<%= hidden_field_tag "product_ids[]", product.id %>
+        		<%= product.name %>
+      		</li>
+    	<% end %>
+    </ul>
+
+	<div class="field">
+    	<%= form.label :Tipo_producto %> <%= collection_select(:product, :type_id, Type.all.order(:id), :id, :name ) %> 
+    </div>
+
+    <div class="field">
+    	<%= form.label :Proveedor %>
+    	<%= collection_select(:product, :provider_id, Provider.all.order(:business_name), :id, :business_name) %> 
+    </div>
+
+	<div class="actions">
+	    <%= form.submit %>
+	</div>
+<% end %>

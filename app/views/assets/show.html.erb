@@ -1,13 +1,23 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Description:</strong>
+  <strong>Descripcion:</strong>
   <%= @asset.description %>
 </p>
 
 <p>
-  <strong>Total:</strong>
+  <strong>Monto Total:</strong>
   <%= @asset.total %>
+</p>
+
+<p>
+  <strong>Tipo:</strong>
+  <%= @asset.asset_type.description %>
+</p>
+
+<p>
+  <strong>Fecha Creacion:</strong>
+  <%= @asset.created_at.day %> / <%= @asset.created_at.month %> / <%= @asset.created_at.year %>
 </p>
 
 <%= link_to 'Edit', edit_asset_path(@asset) %> |

@@ -1,5 +1,6 @@
 class CurrentAccountsController < ApplicationController
   before_action :set_current_account, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /current_accounts
   # GET /current_accounts.json
@@ -69,6 +70,6 @@ class CurrentAccountsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def current_account_params
-      params.require(:current_account).permit(:total, :account_status_id)
+      params.require(:current_account).permit(:first_name, :last_name, :dni, :total, :account_status_id)
     end
 end

@@ -1,5 +1,7 @@
 class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+
 
   # GET /carts
   # GET /carts.json
@@ -77,10 +79,11 @@ class CartsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def cart_params
-      params.require(:cart).permit(:total, sale_lines_attributes: [:product_id, :quantity])
+      params.require(:cart).permit(:total, :current_account_id, :user_id, sale_lines_attributes: [:product_id, :quantity])
     end
 
     def current_cart
-      @cart = Cart.first
+      user = current_user.id
+      @cart = Cart.find_by(user_id: user.to_i)
     end
 end

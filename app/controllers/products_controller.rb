@@ -1,10 +1,17 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+    @q = params[:q]
+    if @q
+      @products = Product.joins(:provider).where("name Like ? OR providers.business_name Like ?", "%" + @q + "%", "%" + @q + "%")
+    else
+      @products = Product.all
+    end
+
     @types = Type.all
   end
 
@@ -59,6 +66,18 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def edit_multiple
+    @products = Product.find(params[:product_ids])
+  end
+
+  def update_multiple
+    #Product.where(:id => params[:product_ids]).update_all(:product_params => params[:product])
+    @products = Product.find(params[:product_ids])
+    @products.each do |pro|
+      pro.update_attributes!(product_params)
     end
   end
 

@@ -2,11 +2,13 @@
 
 <h1>Assets</h1>
 
-<table>
+<table border="1">
   <thead>
     <tr>
-      <th>Description</th>
-      <th>Total</th>
+      <th>Descripcion</th>
+      <th>Monto Total</th>
+      <th>Tipo</th>
+      <th>Fecha Creacion</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,6 +18,8 @@
       <tr>
         <td><%= asset.description %></td>
         <td><%= asset.total %></td>
+        <td><%= asset.asset_type.description %></td>
+        <td><%= asset.created_at.day %> / <%= asset.created_at.month %> / <%= asset.created_at.year %></td>
         <td><%= link_to 'Show', asset %></td>
         <td><%= link_to 'Edit', edit_asset_path(asset) %></td>
         <td><%= link_to 'Destroy', asset, method: :delete, data: { confirm: 'Are you sure?' } %></td>

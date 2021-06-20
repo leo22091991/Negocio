@@ -1,5 +1,6 @@
 class AssetTypesController < ApplicationController
   before_action :set_asset_type, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /asset_types
   # GET /asset_types.json

@@ -1,12 +1,17 @@
 class Cart < ApplicationRecord
 	has_many :sale_lines, :as => :sale_lineable, dependent: :destroy
 	has_many :products, through: :sale_lines
+	belongs_to :user
 
 	accepts_nested_attributes_for :sale_lines
-
+	before_validation :total_cero
 	after_validation :set_totals
 
 	validate :check_products
+
+	def total_cero
+		self.total = 0
+	end
 
 
 	def set_totals

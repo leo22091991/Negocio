@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
-  resources :positions
+  
+  resources :user_permissions
+  devise_for :users
+  scope "/admin" do
+    resources :users
+  end
+  #get  'users/admin_new' => 'users#admin_new'
+  #post 'users/admin_create' => 'users#admin_create'
+  #post 'users/create' => 'users#create'
   resources :users
+  resources :positions
   resources :discounts
   resources :salary_discounts
   resources :assets
@@ -23,7 +32,9 @@ Rails.application.routes.draw do
   resources :account_statuses
   resources :sale_lines
   resources :sales
-  resources :products
+  post '/products/edit_multiple'=>'products#edit_multiple'
+  put '/products/update_multiple'=>'products#update_multiple', as: 'update_multiple_products'
+  resources :products #, :collection => {:edit_multiple => :post, :update_multiple => :put}
   resources :providers
   resources :types
   resources :welcome

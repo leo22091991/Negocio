@@ -19,23 +19,41 @@
 </p>
 
 <div class="account-detail">
-	<div>
-		<% @current_account.sales.each do |sale| %>
-			<div>
-				Fecha: <%= sale.created_at %>
-				compra: <%= sale.total_sale %>
-			</div>
-		<% end %>
-	</div>
+	<table border="1">
+	  <thead>
+	    <tr>
+	      <th>Fecha</th>
+	      <th>Monto de Compra</th>
+	    </tr>
+	  </thead>
 
-	<div>
-		<% @current_account.account_payments.each do |account_payment| %>
-			<div>
-				Fecha: <%= account_payment.created_at %>
-				pago: <%= account_payment.total %>
-			</div>
-		<% end %>
-	</div>
+	  <tbody>
+	    <% @current_account.sales.each do |sale| %>
+	      <tr>
+	        <td><%= sale.created_at.day %> / <%= sale.created_at.month %> / <%= sale.created_at.year %></td>
+	        <td> $ <%= sale.total_sale %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+
+	<table border="1">
+	  <thead>
+	    <tr>
+	      <th>Fecha</th>
+	      <th>Monto de Pago</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <% @current_account.account_payments.each do |account_payment| %>
+	      <tr>
+	        <td><%= account_payment.created_at.day %> / <%= account_payment.created_at.month %> / <%= account_payment.created_at.year %></td>
+	        <td> $ <%= account_payment.total %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
 </div>
 
 <p>

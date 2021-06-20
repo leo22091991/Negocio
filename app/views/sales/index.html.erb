@@ -2,9 +2,12 @@
 
 <h1>Sales</h1>
 
-<table>
+<table border="1">
   <thead>
     <tr>
+      <th>Total</th>
+      <th>fecha</th>
+      <th>Forma de Pago</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -13,7 +16,12 @@
     <% @sales.order(:created_at).each do |sale| %>
       <tr>
         <td><%= sale.total_sale %></td>
-        <td><%= sale.created_at %></td>
+        <td><%= sale.created_at.day %> / <%= sale.created_at.month %> / <%= sale.created_at.year %></td>
+        <% if sale.current_account_id %>
+          <td>Cuenta Corriente: <%= sale.current_account_id %></td>
+        <% else %>
+          <td>Efectivo</td>
+        <%end%>
         <td><%= link_to 'Show', sale %></td>
       </tr>
     <% end %>

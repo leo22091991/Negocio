@@ -1,0 +1,13 @@
+<nav class="topnav">
+	<a class="active" href="/welcome">inicio</a>
+	<a href="/welcome/cart">Nueva Venta</a>
+	<a href="/users">Recursos Humanos</a>
+	<a href="/providers">Compre Proveedores</a>
+	<a href="/current_accounts">Clientes</a>
+	<% if user_signed_in? == false %>
+		<%= link_to('Iniciar Sesion', new_user_session_path) %>
+	<% else %>
+		<%= link_to('cerrar Sesion', destroy_user_session_path, method: :delete) %>
+		<%= current_user.id %>  
+	<% end %>
+</nav>

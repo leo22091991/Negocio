@@ -1,6 +1,6 @@
 class SalaryDiscountsController < ApplicationController
   before_action :set_salary_discount, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
   # GET /salary_discounts
   # GET /salary_discounts.json
   def index

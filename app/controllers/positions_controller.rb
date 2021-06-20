@@ -1,5 +1,6 @@
 class PositionsController < ApplicationController
   before_action :set_position, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /positions
   # GET /positions.json
@@ -69,6 +70,6 @@ class PositionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def position_params
-      params.require(:position).permit(:description, :total)
+      params.require(:position).permit(:description, :total, :user_permission_id)
     end
 end
